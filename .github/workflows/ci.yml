@@ -1,0 +1,78 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements-dev.txt
+      - run: python -m pytest -q
+      - name: Build Docker image
+        run: docker build -t system-core:ci .
+
+  ai-commit-review:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Check commit messages
+        id: guardian
+        run: |
+          python scripts/commit_guardian.py --from-git origin/main..HEAD > guardian.json || true
+          cat guardian.json
+      - name: Comment on PR
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const results = JSON.parse(fs.readFileSync('guardian.json', 'utf8'));
+            const bad = results.filter(r => !r.compliant);
+            const avg = Math.round(results.reduce((s, r) => s + r.score, 0) / Math.max(results.length, 1));
+            const body = bad.length === 0
+              ? `✅ **AI Commit Guardian:** all ${results.length} commit(s) follow Conventional Commits. Average quality score: **${avg}/100**.`
+              : `🤖 **AI Commit Guardian:** ${bad.length} of ${results.length} commit(s) need a fix (average score: ${avg}/100).\n\n` +
+                bad.map(r => `- \`${r.message}\` → try \`${r.suggestion}\` (${r.issues.join('; ')})`).join('\n');
+            github.rest.issues.createComment({
+              owner: context.repo.owner, repo: context.repo.repo,
+              issue_number: context.issue.number, body,
+            });
+
+  generate-changelog:
+    runs-on: ubuntu-latest
+    needs: build-and-test
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Generate changelog with git-cliff if available
+        run: |
+          if command -v git-cliff >/dev/null 2>&1; then git-cliff -o CHANGELOG.md; else python scripts/generate_changelog.py; fi
+      - name: Commit changelog if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add CHANGELOG.md
+          git diff --cached --quiet || git commit -m "docs: update CHANGELOG.md [skip ci]"
+          git push || true
