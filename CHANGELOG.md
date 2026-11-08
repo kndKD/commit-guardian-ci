@@ -7,6 +7,10 @@ All notable changes, generated from Conventional Commits.
 - add Flask app with index, health and hello endpoints
 - initialise Flask app package
 
+## Documentation
+- add architecture diagram and component notes
+- update CHANGELOG.md [skip ci]
+
 ## Tests
 - add tests for index, health and hello endpoints
 
