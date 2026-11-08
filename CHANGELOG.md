@@ -8,6 +8,8 @@ All notable changes, generated from Conventional Commits.
 - initialise Flask app package
 
 ## Documentation
+- add README with purpose, tools, run steps and guardian guide
+- update CHANGELOG.md [skip ci]
 - add architecture diagram and component notes
 - update CHANGELOG.md [skip ci]
 
