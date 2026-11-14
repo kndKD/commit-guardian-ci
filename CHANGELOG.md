@@ -11,6 +11,7 @@ All notable changes, generated from Conventional Commits.
 
 ## Documentation
 - update CHANGELOG.md [skip ci]
+- update CHANGELOG.md [skip ci]
 - document guardian flags, exit codes and LLM layer in README
 - update CHANGELOG.md [skip ci]
 - update CHANGELOG.md [skip ci]
@@ -41,6 +42,7 @@ All notable changes, generated from Conventional Commits.
 - add Flask and gunicorn dependencies
 
 ## Chores
+- exclude coverage, ruff cache and logs from Docker context
 - add dockerignore to keep the image lean
 - add MIT license
 - add gitignore for Python, venv and caches
