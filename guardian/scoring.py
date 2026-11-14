@@ -1,4 +1,5 @@
 """Rule-based Conventional Commits scoring, 0-100. No API key needed."""
+
 import re
 
 from guardian.suggest import suggest
@@ -20,8 +21,13 @@ PATTERN = re.compile(
 
 def check(message: str) -> CheckResult:
     message = message.strip().splitlines()[0] if message.strip() else ""
-    result: CheckResult = {"message": message, "score": 0, "compliant": False,
-              "issues": [], "suggestion": suggest(message)}
+    result: CheckResult = {
+        "message": message,
+        "score": 0,
+        "compliant": False,
+        "issues": [],
+        "suggestion": suggest(message),
+    }
     if not message:
         result["issues"].append("Commit message is empty.")
         return result
@@ -29,7 +35,8 @@ def check(message: str) -> CheckResult:
     if not match:
         result["issues"].append(
             "Not Conventional Commits: expected '<type>: <subject>', "
-            "e.g. 'feat: add login endpoint'.")
+            "e.g. 'feat: add login endpoint'."
+        )
         result["score"] = 20 if len(message) > 10 else 0
         return result
     score = 70
@@ -41,7 +48,8 @@ def check(message: str) -> CheckResult:
     if len(subject) > MAX_SUBJECT_LENGTH:
         result["issues"].append(
             f"Subject is long ({len(subject)} chars) — "
-            f"keep it under {MAX_SUBJECT_LENGTH}.")
+            f"keep it under {MAX_SUBJECT_LENGTH}."
+        )
         score -= 10
     if subject[0].isupper():
         score += 5
@@ -53,7 +61,8 @@ def check(message: str) -> CheckResult:
         score += 10
     result["score"] = max(0, min(score, 100))
     result["compliant"] = (
-        result["score"] >= COMPLIANT_MIN_SCORE and not result["issues"])
+        result["score"] >= COMPLIANT_MIN_SCORE and not result["issues"]
+    )
     if result["compliant"]:
         result["suggestion"] = message
     return result
