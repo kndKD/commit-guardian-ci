@@ -1,5 +1,7 @@
 #Dockerize + GitHub Actions CI
 
+[![CI](https://github.com/kndKD/commit-guardian-ci/actions/workflows/ci.yml/badge.svg)](https://github.com/kndKD/commit-guardian-ci/actions/workflows/ci.yml) [![License: MIT](https://img.shields.io/github/license/kndKD/commit-guardian-ci)](https://github.com/kndKD/commit-guardian-ci/blob/main/LICENSE)
+
 **Innovation: AI Commit Guardian + Auto-Changelog**
 
 This CI pipeline doesn't just build — it teaches. Every PR gets AI-powered
@@ -92,6 +94,6 @@ make coverage    # pytest --cov=app --cov=guardian
 make run         # ./scripts/run.sh — Flask on :5000
 ```
 
-Coverage is reported, not gated: total is 75% (10 Nov 2026), with
+Coverage is reported, not gated: total is 77% (14 Nov 2026), with
 `guardian/llm.py` at 26% because the LLM providers are disabled by default
 and need no key — its paths need mocked tests before any coverage gate.
