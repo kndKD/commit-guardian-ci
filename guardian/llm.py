@@ -21,7 +21,8 @@ PROMPT = (
 )
 
 
-def _post(url: str, payload: dict, headers: dict | None = None, timeout: int = 20) -> dict:
+def _post(url: str, payload: dict, headers: dict | None = None,
+          timeout: int = 20) -> dict:
     req = urllib.request.Request(
         url, data=json.dumps(payload).encode(),
         headers={"Content-Type": "application/json", **(headers or {})})
@@ -46,7 +47,8 @@ def suggest_via_llm(message: str) -> str | None:
                 return None
             data = _post("https://api.openai.com/v1/chat/completions", {
                 "model": "gpt-4o-mini",
-                "messages": [{"role": "user", "content": PROMPT.format(message=message)}]},
+                "messages": [{"role": "user",
+                              "content": PROMPT.format(message=message)}]},
                 {"Authorization": f"Bearer {key}"})
             text = data["choices"][0]["message"]["content"]
         elif provider == "gemini":

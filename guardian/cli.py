@@ -42,7 +42,8 @@ def build_parser() -> argparse.ArgumentParser:
                         help="Let the optional LLM layer improve suggestions "
                              "(guardian/llm.py; disabled unless configured).")
     parser.add_argument("--json", action="store_true",
-                        help="Print results as a JSON array instead of human-readable lines.")
+                        help="Print results as a JSON array instead of "
+                             "human-readable lines.")
     parser.add_argument("--quiet", action="store_true",
                         help="Only print non-compliant messages; silent when all pass.")
     return parser
