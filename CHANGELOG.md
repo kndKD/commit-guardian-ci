@@ -22,6 +22,7 @@ All notable changes, generated from Conventional Commits.
 - update CHANGELOG.md [skip ci]
 - update CHANGELOG.md [skip ci]
 - update CHANGELOG.md [skip ci]
+- update CHANGELOG.md [skip ci]
 - document multi-stage Docker, lint/coverage and Makefile
 - update CHANGELOG.md [skip ci]
 - update CHANGELOG.md [skip ci]
@@ -69,6 +70,7 @@ All notable changes, generated from Conventional Commits.
 - add Flask and gunicorn dependencies
 
 ## Chores
+- add git-cliff configuration for changelog generation
 - add ruff and pytest-cov to dev requirements
 - exclude coverage, ruff cache and logs from Docker context
 - add dockerignore to keep the image lean
