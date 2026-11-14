@@ -19,6 +19,8 @@ All notable changes, generated from Conventional Commits.
 - pin hadolint action to v3.1.0, v3.1 tag does not exist
 
 ## Documentation
+- fill in What I learned and Challenges in README
+- update CHANGELOG.md [skip ci]
 - add blog draft for Project 1
 - update CHANGELOG.md [skip ci]
 - add CI and license badges to README
