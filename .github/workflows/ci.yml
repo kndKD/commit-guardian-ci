@@ -19,9 +19,19 @@ jobs:
         with:
           python-version: "3.12"
       - run: pip install -r requirements-dev.txt
-      - run: python -m pytest -q
+      - run: python -m pytest -q --cov=app --cov=guardian --cov-report=term-missing
       - name: Build Docker image
         run: docker build -t system-core:ci .
+
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements-dev.txt
+      - run: ruff check .
 
   ai-commit-review:
     runs-on: ubuntu-latest
