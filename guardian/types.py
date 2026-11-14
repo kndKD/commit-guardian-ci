@@ -3,12 +3,22 @@
 Kept in one place so scoring, suggesting and the CLI agree on the result
 shape and on what counts as a well-formed subject.
 """
+
 from typing import TypedDict
 
 # Conventional Commits types recognised by the guardian.
 TYPES = {
-    "feat", "fix", "docs", "style", "refactor", "perf", "test",
-    "build", "ci", "chore", "revert",
+    "feat",
+    "fix",
+    "docs",
+    "style",
+    "refactor",
+    "perf",
+    "test",
+    "build",
+    "ci",
+    "chore",
+    "revert",
 }
 
 # A subject shorter than this is flagged as too vague; longer than the max
