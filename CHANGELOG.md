@@ -19,6 +19,8 @@ All notable changes, generated from Conventional Commits.
 - pin hadolint action to v3.1.0, v3.1 tag does not exist
 
 ## Documentation
+- add release notes for v0.1.0
+- update CHANGELOG.md [skip ci]
 - update CHANGELOG.md [skip ci]
 - update CHANGELOG.md [skip ci]
 - update CHANGELOG.md [skip ci]
