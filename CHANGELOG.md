@@ -9,6 +9,8 @@ All notable changes, generated from Conventional Commits.
 - initialise Flask app package
 
 ## Documentation
+- document guardian flags, exit codes and LLM layer in README
+- update CHANGELOG.md [skip ci]
 - update CHANGELOG.md [skip ci]
 - update CHANGELOG.md [skip ci]
 - update CHANGELOG.md [skip ci]
