@@ -23,6 +23,7 @@ All notable changes, generated from Conventional Commits.
 - update CHANGELOG.md [skip ci]
 - update CHANGELOG.md [skip ci]
 - update CHANGELOG.md [skip ci]
+- update CHANGELOG.md [skip ci]
 - fill in What I learned and Challenges in README
 - update CHANGELOG.md [skip ci]
 - add blog draft for Project 1
