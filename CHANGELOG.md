@@ -1,6 +1,7 @@
 # Changelog
 All notable changes, generated from Conventional Commits.
 ## Features
+- add ruff configuration in pyproject.toml
 - build Docker image in two stages (builder + slim runtime)
 - split commit guardian into guardian package with scoring, suggestions, CLI and optional LLM layer
 - add changelog generator from Conventional Commits
@@ -10,6 +11,7 @@ All notable changes, generated from Conventional Commits.
 - initialise Flask app package
 
 ## Documentation
+- update CHANGELOG.md [skip ci]
 - update CHANGELOG.md [skip ci]
 - update CHANGELOG.md [skip ci]
 - document guardian flags, exit codes and LLM layer in README
