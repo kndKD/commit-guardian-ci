@@ -36,7 +36,7 @@ jobs:
       - name: Check commit messages
         id: guardian
         run: |
-          python scripts/commit_guardian.py --from-git origin/main..HEAD > guardian.json || true
+          python scripts/commit_guardian.py --from-git origin/main..HEAD --json > guardian.json || true
           cat guardian.json
       - name: Comment on PR
         uses: actions/github-script@v7
@@ -44,12 +44,22 @@ jobs:
           script: |
             const fs = require('fs');
             const results = JSON.parse(fs.readFileSync('guardian.json', 'utf8'));
+            if (results.length === 0) {
+              github.rest.issues.createComment({
+                owner: context.repo.owner, repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body: '🤖 **AI Commit Guardian:** no commits found in this PR range.',
+              });
+              return;
+            }
             const bad = results.filter(r => !r.compliant);
-            const avg = Math.round(results.reduce((s, r) => s + r.score, 0) / Math.max(results.length, 1));
-            const body = bad.length === 0
-              ? `✅ **AI Commit Guardian:** all ${results.length} commit(s) follow Conventional Commits. Average quality score: **${avg}/100**.`
-              : `🤖 **AI Commit Guardian:** ${bad.length} of ${results.length} commit(s) need a fix (average score: ${avg}/100).\n\n` +
-                bad.map(r => `- \`${r.message}\` → try \`${r.suggestion}\` (${r.issues.join('; ')})`).join('\n');
+            const avg = Math.round(results.reduce((s, r) => s + r.score, 0) / results.length);
+            const rows = results.map(r =>
+              `| \`${r.message}\` | ${r.score} | ${r.compliant ? '✅ pass' : '❌ fix'} | ${r.compliant ? '—' : `\`${r.suggestion}\``} |`
+            ).join('\n');
+            const body = `🤖 **AI Commit Guardian** — average score **${avg}/100** across ${results.length} commit(s).\n\n` +
+              `| Commit | Score | Status | Suggested fix |\n|---|---|---|---|\n${rows}` +
+              (bad.length === 0 ? '\n\nAll commits follow Conventional Commits. 🎉' : '');
             github.rest.issues.createComment({
               owner: context.repo.owner, repo: context.repo.repo,
               issue_number: context.issue.number, body,
