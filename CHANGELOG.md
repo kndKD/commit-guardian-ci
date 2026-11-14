@@ -15,6 +15,8 @@ All notable changes, generated from Conventional Commits.
 - initialise Flask app package
 
 ## Documentation
+- document multi-stage Docker, lint/coverage and Makefile
+- update CHANGELOG.md [skip ci]
 - update CHANGELOG.md [skip ci]
 - update CHANGELOG.md [skip ci]
 - update CHANGELOG.md [skip ci]
