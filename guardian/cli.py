@@ -17,6 +17,7 @@ Usage:
     echo "bad message" | python scripts/commit_guardian.py --stdin
     python scripts/commit_guardian.py --llm "added stuff"
 """
+
 import argparse
 import json
 import os
@@ -32,26 +33,38 @@ from guardian.scoring import check  # noqa: E402
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         prog="commit_guardian",
-        description="Score commit messages against Conventional Commits.")
+        description="Score commit messages against Conventional Commits.",
+    )
     parser.add_argument("message", nargs="*", help="Commit message to check.")
-    parser.add_argument("--from-git", metavar="RANGE",
-                        help="Check commit subjects in a git range, e.g. HEAD~3..HEAD.")
-    parser.add_argument("--stdin", action="store_true",
-                        help="Read one message per line from stdin.")
-    parser.add_argument("--llm", action="store_true",
-                        help="Let the optional LLM layer improve suggestions "
-                             "(guardian/llm.py; disabled unless configured).")
-    parser.add_argument("--json", action="store_true",
-                        help="Print results as a JSON array instead of "
-                             "human-readable lines.")
-    parser.add_argument("--quiet", action="store_true",
-                        help="Only print non-compliant messages; silent when all pass.")
+    parser.add_argument(
+        "--from-git",
+        metavar="RANGE",
+        help="Check commit subjects in a git range, e.g. HEAD~3..HEAD.",
+    )
+    parser.add_argument(
+        "--stdin", action="store_true", help="Read one message per line from stdin."
+    )
+    parser.add_argument(
+        "--llm",
+        action="store_true",
+        help="Let the optional LLM layer improve suggestions "
+        "(guardian/llm.py; disabled unless configured).",
+    )
+    parser.add_argument(
+        "--json",
+        action="store_true",
+        help="Print results as a JSON array instead of human-readable lines.",
+    )
+    parser.add_argument(
+        "--quiet",
+        action="store_true",
+        help="Only print non-compliant messages; silent when all pass.",
+    )
     return parser
 
 
 def messages_from_git(range_spec: str) -> list[str]:
-    out = subprocess.check_output(
-        ["git", "log", "--format=%s", range_spec], text=True)
+    out = subprocess.check_output(["git", "log", "--format=%s", range_spec], text=True)
     return [line for line in out.splitlines() if line.strip()]
 
 
@@ -73,9 +86,11 @@ def main(argv: list[str] | None = None) -> int:
         messages = [" ".join(args.message)]
     else:
         build_parser().print_usage(sys.stderr)
-        print("commit_guardian: error: no message given "
-              "(pass a message, --from-git RANGE, or --stdin)",
-              file=sys.stderr)
+        print(
+            "commit_guardian: error: no message given "
+            "(pass a message, --from-git RANGE, or --stdin)",
+            file=sys.stderr,
+        )
         return 2
     results = [check(m) for m in messages]
     if args.llm:
