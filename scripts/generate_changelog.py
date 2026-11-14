@@ -14,7 +14,8 @@ SECTIONS = [
     ("docs", "Documentation"), ("refactor", "Refactoring"),
     ("test", "Tests"), ("ci", "CI"), ("build", "Build"), ("chore", "Chores"),
 ]
-PATTERN = re.compile(r"^(feat|fix|perf|docs|refactor|test|ci|build|chore)(?:\(.+\))?: (.+)$")
+PATTERN = re.compile(
+    r"^(feat|fix|perf|docs|refactor|test|ci|build|chore)(?:\(.+\))?: (.+)$")
 
 
 def commits(range_spec: str = "HEAD") -> list[str]:
@@ -24,13 +25,15 @@ def commits(range_spec: str = "HEAD") -> list[str]:
 
 
 def main() -> int:
-    range_spec = sys.argv[2] if len(sys.argv) > 2 and sys.argv[1] == "--from-git" else "HEAD"
+    range_spec = (sys.argv[2] if len(sys.argv) > 2
+                  and sys.argv[1] == "--from-git" else "HEAD")
     grouped: dict[str, list[str]] = defaultdict(list)
     for message in commits(range_spec):
         match = PATTERN.match(message)
         if match:
             grouped[match.group(1)].append(match.group(2))
-    lines = ["# Changelog\n", "All notable changes, generated from Conventional Commits.\n"]
+    lines = ["# Changelog\n",
+             "All notable changes, generated from Conventional Commits.\n"]
     for type_, title in SECTIONS:
         if grouped.get(type_):
             lines.append(f"## {title}\n")
