@@ -1,0 +1,42 @@
+# git-cliff configuration — used by the CI generate-changelog job
+# (`git-cliff -o CHANGELOG.md`) when git-cliff is available; otherwise
+# scripts/generate_changelog.py is the no-dependency fallback.
+[changelog]
+header = """# Changelog
+All notable changes, generated from Conventional Commits.
+"""
+body = """
+{% if version %}\
+    ## [{{ version | trim_start_matches(pat="v") }}] - {{ timestamp | date(format="%Y-%m-%d") }}
+{% else %}\
+    ## [unreleased]
+{% endif %}\
+{% for group, commits in commits | group_by(attribute="group") %}
+    ### {{ group | upper_first }}
+    {% for commit in commits %}
+        - {{ commit.message | upper_first }}
+    {% endfor %}
+{% endfor %}
+"""
+trim = true
+footer = ""
+
+[git]
+conventional_commits = true
+filter_unconventional = true
+commit_parsers = [
+    { message = "^feat", group = "Features" },
+    { message = "^fix", group = "Bug Fixes" },
+    { message = "^docs", group = "Documentation" },
+    { message = "^perf", group = "Performance" },
+    { message = "^refactor", group = "Refactor" },
+    { message = "^style", group = "Styling" },
+    { message = "^test", group = "Tests" },
+    { message = "^chore", group = "Miscellaneous" },
+    { message = "^ci", group = "CI" },
+    { message = "^build", group = "Build" },
+    { message = ".*", group = "Other" },
+]
+filter_commits = true
+tag_pattern = "v[0-9].*"
+skip_tags = "v0.0.0"
