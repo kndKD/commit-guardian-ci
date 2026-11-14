@@ -1,6 +1,7 @@
 # Changelog
 All notable changes, generated from Conventional Commits.
 ## Features
+- add /api/status and /api/echo endpoints with JSON error responses
 - add scripts/docker-build.sh image build helper
 - add scripts/run.sh local run helper
 - add scripts/test.sh test helper
@@ -18,6 +19,7 @@ All notable changes, generated from Conventional Commits.
 - pin hadolint action to v3.1.0, v3.1 tag does not exist
 
 ## Documentation
+- update CHANGELOG.md [skip ci]
 - update CHANGELOG.md [skip ci]
 - document multi-stage Docker, lint/coverage and Makefile
 - update CHANGELOG.md [skip ci]
