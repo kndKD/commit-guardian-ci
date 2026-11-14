@@ -19,6 +19,7 @@ All notable changes, generated from Conventional Commits.
 - pin hadolint action to v3.1.0, v3.1 tag does not exist
 
 ## Documentation
+- update CHANGELOG.md [skip ci]
 - fill in What I learned and Challenges in README
 - update CHANGELOG.md [skip ci]
 - add blog draft for Project 1
@@ -80,6 +81,7 @@ All notable changes, generated from Conventional Commits.
 - add Flask and gunicorn dependencies
 
 ## Chores
+- ignore local coverage artifacts in git
 - add git-cliff configuration for changelog generation
 - add ruff and pytest-cov to dev requirements
 - exclude coverage, ruff cache and logs from Docker context
