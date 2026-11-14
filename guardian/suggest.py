@@ -5,7 +5,6 @@ point for the author, not a rewrite: it keeps the author's words and
 only repairs the shape.
 """
 
-
 from guardian.types import TYPES
 
 
