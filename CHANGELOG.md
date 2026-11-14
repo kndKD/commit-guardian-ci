@@ -1,6 +1,7 @@
 # Changelog
 All notable changes, generated from Conventional Commits.
 ## Features
+- add scripts/test.sh test helper
 - add Makefile with test, lint, coverage and run targets
 - add ruff configuration in pyproject.toml
 - build Docker image in two stages (builder + slim runtime)
@@ -12,6 +13,7 @@ All notable changes, generated from Conventional Commits.
 - initialise Flask app package
 
 ## Documentation
+- update CHANGELOG.md [skip ci]
 - update CHANGELOG.md [skip ci]
 - update CHANGELOG.md [skip ci]
 - update CHANGELOG.md [skip ci]
