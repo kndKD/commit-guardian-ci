@@ -21,6 +21,7 @@ All notable changes, generated from Conventional Commits.
 ## Documentation
 - update CHANGELOG.md [skip ci]
 - update CHANGELOG.md [skip ci]
+- update CHANGELOG.md [skip ci]
 - document multi-stage Docker, lint/coverage and Makefile
 - update CHANGELOG.md [skip ci]
 - update CHANGELOG.md [skip ci]
@@ -53,6 +54,7 @@ All notable changes, generated from Conventional Commits.
 - rewrite commit-guardian CLI as thin wrapper
 
 ## Tests
+- cover status, echo and JSON error responses
 - add guardian scoring, suggestion, long-subject and CLI tests
 - add tests for index, health and hello endpoints
 
