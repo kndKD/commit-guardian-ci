@@ -69,3 +69,29 @@ per-commit score table as a PR comment.
 
 - _To be filled in as the project runs — e.g. Docker not available locally,
   so image builds are verified in GitHub Actions._
+
+## Docker (multi-stage)
+
+```sh
+./scripts/docker-build.sh            # builds commit-guardian-ci:latest
+docker run -p 5000:5000 commit-guardian-ci:latest
+```
+
+The image is built in two stages: a `builder` stage installs dependencies
+into `/install`, and the `runtime` stage copies only those packages plus
+`app/` into a slim image running as the non-root `appuser`. Build size is
+not measured locally — Docker is not installed on this VM; the build is
+verified in GitHub Actions CI.
+
+## Lint and coverage
+
+```sh
+make test        # pytest
+make lint        # ruff check . (rules E, F; line-length 88, see pyproject.toml)
+make coverage    # pytest --cov=app --cov=guardian
+make run         # ./scripts/run.sh — Flask on :5000
+```
+
+Coverage is reported, not gated: total is 75% (10 Nov 2026), with
+`guardian/llm.py` at 26% because the LLM providers are disabled by default
+and need no key — its paths need mocked tests before any coverage gate.
