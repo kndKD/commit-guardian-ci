@@ -64,13 +64,38 @@ per-commit score table as a PR comment.
 
 ## What I learned
 
-- _To be filled in as the project runs — Docker layering, CI job design,
-  and Conventional Commits in practice._
+- Docker layering is a design decision, not a copy-paste: the
+  multi-stage build (a `builder` stage installing into `/install`, then a
+  slim `runtime` stage copying only the packages plus `app/`) was the first
+  time the image structure felt deliberate. The size saving is not measured
+  locally — Docker is not installed on the author's VM, so CI is the only
+  proof.
+- CI job design is about feedback speed: separate lint, docker-lint and
+  commit-review jobs mean a bad commit message fails fast with a readable
+  table instead of hiding inside a monolithic build log.
+- Conventional Commits are a habit, not a format: writing 15 atomic
+  commits for Day 1 forced one logical change per commit with a message
+  that says what and why. The guardian makes the rule visible.
+- A fallback is a feature: the changelog has two paths (git-cliff, then a
+  plain Python script) and the LLM layer degrades to rule-based suggestions
+  when unconfigured — the pipeline works with zero keys and zero paid
+  services.
 
 ## Challenges
 
-- _To be filled in as the project runs — e.g. Docker not available locally,
-  so image builds are verified in GitHub Actions._
+- Docker was not available locally, so every image change was verified
+  in GitHub Actions — a slower loop that taught proper CI log reading.
+- History divergence: the first 15 commits were pushed through the GitHub
+  web UI because the GitHub App had no write access, so local and GitHub
+  history were different objects with identical content. Days 2–7 landed
+  on top of the GitHub state instead of pushing local history.
+- A week that slipped: Days 2–3 were built on time but did not land for
+  five days while a go-ahead was unanswered. The work survived because it
+  was backed up outside `/tmp` and re-verified in a clean venv.
+- Measuring honestly: coverage is reported, not gated (77% at v0.1.0),
+  and the LLM module sits at 26% because its providers are disabled by
+  default. PR review time is listed as "to be measured" — no invented
+  baseline.
 
 ## Docker (multi-stage)
 
