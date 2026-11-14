@@ -26,6 +26,7 @@ All notable changes, generated from Conventional Commits.
 - update CHANGELOG.md [skip ci]
 - update CHANGELOG.md [skip ci]
 - update CHANGELOG.md [skip ci]
+- update CHANGELOG.md [skip ci]
 - document guardian flags, exit codes and LLM layer in README
 - update CHANGELOG.md [skip ci]
 - update CHANGELOG.md [skip ci]
@@ -48,6 +49,7 @@ All notable changes, generated from Conventional Commits.
 - add tests for index, health and hello endpoints
 
 ## CI
+- add hadolint job for the Dockerfile
 - add lint job and coverage report to CI
 - PR comment posts per-commit score table
 - add build-and-test, commit review and changelog jobs
