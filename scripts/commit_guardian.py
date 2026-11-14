@@ -3,6 +3,7 @@
 See guardian/cli.py for flags and exit codes (0 all compliant,
 1 any non-compliant, 2 usage error).
 """
+
 import os
 import sys
 
