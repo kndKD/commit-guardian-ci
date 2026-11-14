@@ -1,4 +1,4 @@
-# Project 1 — Dockerize + GitHub Actions CI
+#Dockerize + GitHub Actions CI
 
 **Innovation: AI Commit Guardian + Auto-Changelog**
 
