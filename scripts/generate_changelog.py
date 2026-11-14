@@ -4,36 +4,46 @@ Fallback for git-cliff: if `git-cliff` is installed, CI prefers it.
 This script needs no extra tooling and groups feat/fix/docs/etc.
 Usage: python scripts/generate_changelog.py [--from-git v0.1.0..HEAD]
 """
+
 import re
 import subprocess
 import sys
 from collections import defaultdict
 
 SECTIONS = [
-    ("feat", "Features"), ("fix", "Bug Fixes"), ("perf", "Performance"),
-    ("docs", "Documentation"), ("refactor", "Refactoring"),
-    ("test", "Tests"), ("ci", "CI"), ("build", "Build"), ("chore", "Chores"),
+    ("feat", "Features"),
+    ("fix", "Bug Fixes"),
+    ("perf", "Performance"),
+    ("docs", "Documentation"),
+    ("refactor", "Refactoring"),
+    ("test", "Tests"),
+    ("ci", "CI"),
+    ("build", "Build"),
+    ("chore", "Chores"),
 ]
 PATTERN = re.compile(
-    r"^(feat|fix|perf|docs|refactor|test|ci|build|chore)(?:\(.+\))?: (.+)$")
+    r"^(feat|fix|perf|docs|refactor|test|ci|build|chore)(?:\(.+\))?: (.+)$"
+)
 
 
 def commits(range_spec: str = "HEAD") -> list[str]:
-    out = subprocess.check_output(
-        ["git", "log", "--format=%s", range_spec], text=True)
+    out = subprocess.check_output(["git", "log", "--format=%s", range_spec], text=True)
     return [line for line in out.splitlines() if line.strip()]
 
 
 def main() -> int:
-    range_spec = (sys.argv[2] if len(sys.argv) > 2
-                  and sys.argv[1] == "--from-git" else "HEAD")
+    range_spec = (
+        sys.argv[2] if len(sys.argv) > 2 and sys.argv[1] == "--from-git" else "HEAD"
+    )
     grouped: dict[str, list[str]] = defaultdict(list)
     for message in commits(range_spec):
         match = PATTERN.match(message)
         if match:
             grouped[match.group(1)].append(match.group(2))
-    lines = ["# Changelog\n",
-             "All notable changes, generated from Conventional Commits.\n"]
+    lines = [
+        "# Changelog\n",
+        "All notable changes, generated from Conventional Commits.\n",
+    ]
     for type_, title in SECTIONS:
         if grouped.get(type_):
             lines.append(f"## {title}\n")
