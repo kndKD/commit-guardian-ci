@@ -1,4 +1,5 @@
-"""AI Commit Guardian package (Day 2 hardening, uncommitted prep for 9 Nov)."""
+"""AI Commit Guardian package — scoring, suggestions, CLI and LLM layer."""
+
 from guardian.scoring import check
 from guardian.suggest import suggest
 
