@@ -14,7 +14,11 @@ All notable changes, generated from Conventional Commits.
 - add Flask app with index, health and hello endpoints
 - initialise Flask app package
 
+## Bug Fixes
+- pin hadolint action to v3.1.0, v3.1 tag does not exist
+
 ## Documentation
+- update CHANGELOG.md [skip ci]
 - document multi-stage Docker, lint/coverage and Makefile
 - update CHANGELOG.md [skip ci]
 - update CHANGELOG.md [skip ci]
