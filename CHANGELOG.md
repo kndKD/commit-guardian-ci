@@ -13,6 +13,7 @@ All notable changes, generated from Conventional Commits.
 - update CHANGELOG.md [skip ci]
 - update CHANGELOG.md [skip ci]
 - update CHANGELOG.md [skip ci]
+- update CHANGELOG.md [skip ci]
 - add initial changelog
 - update CHANGELOG.md [skip ci]
 - add README with purpose, tools, run steps and guardian guide
@@ -28,6 +29,7 @@ All notable changes, generated from Conventional Commits.
 - add tests for index, health and hello endpoints
 
 ## CI
+- PR comment posts per-commit score table
 - add build-and-test, commit review and changelog jobs
 
 ## Build
