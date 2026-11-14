@@ -38,12 +38,21 @@ python app/main.py
 ```bash
 python scripts/commit_guardian.py "feat: add login endpoint"
 python scripts/commit_guardian.py "added stuff"   # non-compliant, with a suggested fix
+python scripts/commit_guardian.py --json "added stuff"  # machine-readable JSON (used by CI)
+python scripts/commit_guardian.py --quiet --from-git HEAD~3..HEAD  # only non-compliant lines
+python scripts/commit_guardian.py --llm "added stuff"  # optional LLM-improved suggestion
 ```
 
+Exit codes: `0` every message compliant, `1` at least one non-compliant,
+`2` usage error (no message, `--from-git` range, or `--stdin` given).
+
 The checker is rule-based and needs no API key (score 0–100, Conventional
-Commits). An LLM layer can be added later via a GitHub Secret
-(`OPENAI_API_KEY` / `GEMINI_API_KEY`) or local Ollama — it receives the
-same JSON and returns a suggested fix.
+Commits). An optional LLM layer lives in `guardian/llm.py` and is disabled
+by default: set `GUARDIAN_LLM=ollama` for local Ollama (free), or
+`openai` / `gemini` with the key in a GitHub Secret (`OPENAI_API_KEY` /
+`GEMINI_API_KEY`) — never hard-code a key. If the LLM is unconfigured or
+fails, the rule-based suggestion is used instead. On every PR, CI posts a
+per-commit score table as a PR comment.
 
 ## Measurable impact
 
